@@ -1,39 +1,54 @@
-#include <iostream>
-#include <vector>
+#include<iostream>
+#include<vector>
 using namespace std;
+int solve(vector<int> &arr) {
+ int n=arr.size();
+     if (n == 1) {
+        return 1;
+    }
+    if (n == 2)
+        return 0;
 
-int countWaysToMakeSumEqual(vector<int>& arr) {
-    int evenSum = 0, oddSum = 0;
-    int n = arr.size();
-    
-    // Calculate sum of even-indexed and odd-indexed elements
+    int sumEven = 0, sumOdd = 0;
     for (int i = 0; i < n; i++) {
         if (i % 2 == 0)
-            evenSum += arr[i];
+            sumEven += arr[i];
         else
-            oddSum += arr[i];
+            sumOdd += arr[i];
     }
-    
-    int count = 0;
-    
-    // Check if removing an element makes sums equal
-    for (int i = 0; i < n; i++) {
-        if ((i % 2 == 0 && evenSum - arr[i] == oddSum) || (i % 2 != 0 && oddSum - arr[i] == evenSum)) {
-            count++;
+
+    int currOdd = 0, currEven = arr[0], res = 0;
+    int newEvenSum = 0, newOddSum = 0;
+
+    for (int i = 1; i < n - 1; i++) {
+        if (i % 2) {
+            currOdd += arr[i];
+            newEvenSum = currEven + sumOdd - currOdd;
+            newOddSum = currOdd + sumEven - currEven - arr[i];
+        } else {
+            currEven += arr[i];
+            newOddSum = currOdd + sumEven - currEven;
+            newEvenSum = currEven + sumOdd - currOdd - arr[i];
+        }
+
+        if (newEvenSum == newOddSum) {
+            res++;
         }
     }
-    
-    return count;
-}
 
-int main() {
-    vector<int> arr = {1, 2, 3, 4, 5};
-    cout << countWaysToMakeSumEqual(arr) << endl; // Output: 2
-    // Removing element at index 1 or 2 makes the sums equal
-    
-    arr = {2, 2, 2, 2};
-    cout << countWaysToMakeSumEqual(arr) << endl; // Output: 4
-    // Removing any element makes the sums equal
-    
-    return 0;
+    if (sumOdd == sumEven - arr[0]) {
+        res++;
+    }
+
+    if (n % 2 == 1) {
+        if (sumOdd == sumEven - arr[n - 1]) {
+            res++;
+        }
+    } else {
+        if (sumEven == sumOdd - arr[n - 1]) {
+            res++;
+        }
+    }
+
+    return res;
 }
