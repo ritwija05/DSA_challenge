@@ -14,5 +14,5 @@ int solve(string A) {
             ans += count;
         }
     }
-    return count;
+    return count;//donee
 }
