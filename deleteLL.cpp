@@ -6,9 +6,7 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
-class Solution {
-public:
-    void deleteNode(ListNode* node) {
+void deleteNode(ListNode* node) {
         ListNode *curr;
         while(node->next!=nullptr)
         {
@@ -18,4 +16,3 @@ public:
         }
         curr->next=nullptr;
     }
-};
