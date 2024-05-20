@@ -6,7 +6,7 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
-void deleteNode(ListNode* node) {
+void deletedNode(ListNode* node) {
         ListNode *curr;
         while(node->next!=nullptr)
         {
